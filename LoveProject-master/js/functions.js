@@ -1,7 +1,8 @@
 ﻿
-var $window = $(window), gardenCtx, gardenCanvas, $garden, garden;
+var $window = $(window), gardenCtx, gardenCanvas, $garden, garden, offsetX, offsetY;
 var clientWidth = $(window).width();
 var clientHeight = $(window).height();
+var WORDS_VERTICAL_POSITION_RATIO = 0.31;
 
 $(function () {
     // setup garden
@@ -125,7 +126,7 @@ function showMessages() {
 
 function adjustWordsPosition() {
 	$('#words').css("position", "absolute");
-	$('#words').css("top", $("#garden").position().top + ($("#garden").height() * 0.31));
+	$('#words').css("top", $("#garden").position().top + ($("#garden").height() * WORDS_VERTICAL_POSITION_RATIO));
 	$('#words').css("left", $("#garden").position().left + (($garden.width() - $("#words").outerWidth()) / 2));
 }
 
