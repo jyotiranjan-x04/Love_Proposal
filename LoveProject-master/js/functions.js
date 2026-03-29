@@ -131,7 +131,11 @@ function adjustWordsPosition() {
 }
 
 function adjustCodePosition() {
-	$('#code').css("margin-top", ($("#garden").height() - $("#code").height()) / 2);
+	var codeMarginTop = ($("#garden").height() - $("#code").height()) / 2;
+	if ($(window).width() <= 768 || codeMarginTop < 0) {
+		codeMarginTop = 0;
+	}
+	$('#code').css("margin-top", codeMarginTop);
 }
 
 function showLoveU() {
