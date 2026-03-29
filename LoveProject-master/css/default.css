@@ -26,7 +26,6 @@
   width: 100%;
   max-width: 320px;
   height: 320px;
-  min-height: 320px;
   position: relative;
 }
 #garden {
@@ -129,6 +128,9 @@
 @media (min-width: 769px) {
   #content {
     gap: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
   #loveHeart {
     max-width: 670px;
@@ -152,11 +154,6 @@
   #loveu,
   #loveu .signature {
     font-size: 18px;
-  }
-  #content {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
   }
   #loveu {
     margin-right: 120px;
