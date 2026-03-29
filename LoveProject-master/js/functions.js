@@ -1,13 +1,14 @@
 ﻿
-var $window = $(window), gardenCtx, gardenCanvas, $garden, garden;
+var $window = $(window), gardenCtx, gardenCanvas, $garden, garden, offsetX, offsetY;
 var clientWidth = $(window).width();
 var clientHeight = $(window).height();
+var WORDS_VERTICAL_POSITION_RATIO = 0.31;
 
 $(function () {
     // setup garden
 	$loveHeart = $("#loveHeart");
-	var offsetX = $loveHeart.width() / 2;
-	var offsetY = $loveHeart.height() / 2 - 55;
+	offsetX = $loveHeart.width() / 2;
+	offsetY = $loveHeart.height() / 2 - 55;
     $garden = $("#garden");
     gardenCanvas = $garden[0];
 	gardenCanvas.width = $("#loveHeart").width();
@@ -16,11 +17,6 @@ $(function () {
     gardenCtx.globalCompositeOperation = "lighter";
     garden = new Garden(gardenCtx, gardenCanvas);
 	
-	$("#content").css("width", $loveHeart.width() + $("#code").width());
-	$("#content").css("height", Math.max($loveHeart.height(), $("#code").height()));
-	$("#content").css("margin-top", Math.max(($window.height() - $("#content").height()) / 2, 10));
-	$("#content").css("margin-left", Math.max(($window.width() - $("#content").width()) / 2, 10));
-
     // renderLoop
     setInterval(function () {
         garden.render();
@@ -30,8 +26,15 @@ $(function () {
 $(window).resize(function() {
     var newWidth = $(window).width();
     var newHeight = $(window).height();
-    if (newWidth != clientWidth && newHeight != clientHeight) {
-        location.replace(location);
+    if (newWidth != clientWidth || newHeight != clientHeight) {
+		clientWidth = newWidth;
+		clientHeight = newHeight;
+		gardenCanvas.width = $("#loveHeart").width();
+		gardenCanvas.height = $("#loveHeart").height();
+		offsetX = $("#loveHeart").width() / 2;
+		offsetY = $("#loveHeart").height() / 2 - 55;
+		adjustWordsPosition();
+		adjustCodePosition();
     }
 });
 
@@ -123,8 +126,8 @@ function showMessages() {
 
 function adjustWordsPosition() {
 	$('#words').css("position", "absolute");
-	$('#words').css("top", $("#garden").position().top + 195);
-	$('#words').css("left", $("#garden").position().left + 70);
+	$('#words').css("top", $("#garden").position().top + ($("#garden").height() * WORDS_VERTICAL_POSITION_RATIO));
+	$('#words').css("left", $("#garden").position().left + (($garden.width() - $("#words").outerWidth()) / 2));
 }
 
 function adjustCodePosition() {
